@@ -32,15 +32,15 @@ struct Sphere {
 	}
 };
 Sphere spheres[] = {//Scene: radius, position, emission, color, material
-  Sphere(1e5, Vec(1e5 + 1,40.8,81.6), Vec(),Vec(.75,.5,.25),DIFF),//Left
-  Sphere(1e5, Vec(-1e5 + 99,40.8,81.6),Vec(),Vec(.25,.25,.75),DIFF),//Rght
-  Sphere(1e5, Vec(50,40.8, 1e5),     Vec(),Vec(.5,.75,.75),DIFF),//Back
+  Sphere(1e5, Vec(1e5 + 1,40.8,81.6), Vec(),Vec(.75,.5,.5),DIFF),//Left
+  Sphere(1e5, Vec(-1e5 + 99,40.8,81.6),Vec(),Vec(.80,.25,.0),SPEC),//Rght
+  Sphere(1e5, Vec(50,40.8, 1e5),     Vec(),Vec(.5,.25,.75),DIFF),//Back
   Sphere(1e5, Vec(50,40.8,-1e5 + 170), Vec(),Vec(),           DIFF),//Frnt
   Sphere(1e5, Vec(50, 1e5, 81.6),    Vec(),Vec(.75,.75,.75),DIFF),//Botm
   Sphere(1e5, Vec(50,-1e5 + 81.6,81.6),Vec(),Vec(.75,.75,.75),DIFF),//Top
 
   Sphere(16.5,Vec(27,50.5,90),       Vec(),Vec(1,1,1) * .999, REFR),//Mirr
-  Sphere(14.5,Vec(27,50.5,90),       Vec(),Vec(1,1,1) * .999, REFR),//Mirr
+  Sphere(9.0,Vec(27,50.5,90),       Vec(),Vec(1,1,1) * .999, REFR),//Mirr
 
   Sphere(16.5,Vec(40,20.0,50),       Vec(),Vec(0,1,1) * .999, SPEC),//Diff Sphere
   Sphere(16.5,Vec(73,16.5,78),       Vec(),Vec(1,1,1) * .999, DIFF),//Glas
@@ -82,7 +82,7 @@ Vec radiance(const Ray& r, int depth, unsigned short* Xi) {
 		radiance(reflRay, depth, Xi) * Re + radiance(Ray(x, tdir), depth, Xi) * Tr);
 }
 int main(int argc, char* argv[]) {
-	int w = 1280, h = 720, samps = argc == 2 ? atoi(argv[1]) / 4 : 1; // # samples 
+	int w = 1024, h = 720, samps = argc == 2 ? atoi(argv[1]) / 4 : 1; // # samples 
 	Ray cam(Vec(50, 52, 295.6), Vec(0, -0.042612, -1).norm()); // cam pos, dir
 	Vec cx = Vec(w * .5135 / h), cy = (cx % cam.d).norm() * .5135, r, * c = new Vec[w * h];
 #pragma omp parallel for schedule(dynamic, 1) private(r)       // OpenMP
